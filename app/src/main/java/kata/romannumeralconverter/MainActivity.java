@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -62,9 +64,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+        private TextView _resultTextView;
+
         public PlaceholderFragment() {
         }
 
@@ -114,11 +116,31 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
+            View rootView;
+            int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
+    //        EditText dataToConvert;
+            switch (sectionNumber) {
+                case 1:
+                    rootView = inflater.inflate(R.layout.fragment_arabic_to_roman, container, false);
+  //                  dataToConvert = (EditText) rootView.findViewById(R.id.arabic_number_text_box);
+                    break;
+                case 2:
+                    rootView = inflater.inflate(R.layout.fragment_arabic_to_roman, container, false);
+//                    dataToConvert = (EditText) rootView.findViewById(R.id.arabic_number_text_box);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid section number");
+            }
+
+            _resultTextView = (TextView)rootView.findViewById(R.id.result_label);
+
+            rootView.findViewById(R.id.convert_button).setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    _resultTextView.setText("clicked");
+                }
+            });
+
             return rootView;
         }
     }
@@ -142,19 +164,17 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 2 total pages.
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "Convert Arabic to Roman";
                 case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
+                    return "Convert Roman to Arabic";
             }
             return null;
         }
