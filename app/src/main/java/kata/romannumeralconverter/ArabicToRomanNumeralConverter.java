@@ -5,7 +5,10 @@ public class ArabicToRomanNumeralConverter {
         StringBuilder romanNumerals = new StringBuilder();
         int iCount = 0;
         while(number > 0) {
-            if(number - 1 >= 0) {
+            if(number - 5 >= 0) {
+                number -= 5;
+                romanNumerals.append("V");
+            } else if(number - 1 >= 0) {
                 number -= 1;
                 iCount++;
                 if(iCount > 3){
