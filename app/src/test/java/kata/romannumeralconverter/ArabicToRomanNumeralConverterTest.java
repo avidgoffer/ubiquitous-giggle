@@ -10,5 +10,7 @@ public class ArabicToRomanNumeralConverterTest {
         ArabicToRomanNumeralConverter arabicToRomanNumeralConverter = new ArabicToRomanNumeralConverter();
         assertEquals("I", arabicToRomanNumeralConverter.convert(1));
         assertEquals("II", arabicToRomanNumeralConverter.convert(2));
+        assertEquals("III", arabicToRomanNumeralConverter.convert(3));
+        assertEquals("IV", arabicToRomanNumeralConverter.convert(4));
     }
 }
