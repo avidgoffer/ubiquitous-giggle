@@ -9,5 +9,6 @@ public class ArabicToRomanNumeralConverterTest {
     public void whenArabicToRomanNumeralConverterIsPassedANumberItReturnsTheCorrectRomanNumeral() {
         ArabicToRomanNumeralConverter arabicToRomanNumeralConverter = new ArabicToRomanNumeralConverter();
         assertEquals("I", arabicToRomanNumeralConverter.convert(1));
+        assertEquals("II", arabicToRomanNumeralConverter.convert(2));
     }
 }
