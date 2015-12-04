@@ -11,6 +11,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -99,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         private TextView _resultTextView;
+        private EditText _dataToConvert;
+        private int _sectionNumber;
+        private Button _convertButton;
 
         public PlaceholderFragment() {
         }
@@ -118,29 +123,47 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
             View rootView;
-            int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-    //        EditText dataToConvert;
-            switch (sectionNumber) {
+            _sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
+            switch (_sectionNumber) {
                 case 1:
                     rootView = inflater.inflate(R.layout.fragment_arabic_to_roman, container, false);
-  //                  dataToConvert = (EditText) rootView.findViewById(R.id.arabic_number_text_box);
+                    _dataToConvert = (EditText) rootView.findViewById(R.id.arabic_number_text_box);
                     break;
                 case 2:
-                    rootView = inflater.inflate(R.layout.fragment_arabic_to_roman, container, false);
-//                    dataToConvert = (EditText) rootView.findViewById(R.id.arabic_number_text_box);
+                    rootView = inflater.inflate(R.layout.fragment_roman_to_arabic, container, false);
+                    _dataToConvert = (EditText) rootView.findViewById(R.id.roman_numeral_text_box);
                     break;
                 default:
                     throw new IllegalArgumentException("Invalid section number");
             }
 
-            _resultTextView = (TextView)rootView.findViewById(R.id.result_label);
+            _dataToConvert.addTextChangedListener(new TextWatcher() {
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
 
-            rootView.findViewById(R.id.convert_button).setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    _resultTextView.setText("clicked");
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                public void afterTextChanged(Editable s) {
+                    if(s.length() == 0) {
+                        _resultTextView.setText("");
+                        return;
+                    }
+
+                    switch (_sectionNumber) {
+                        case 1:
+                            ArabicToRomanNumeralConverter arabicToRomanNumeralConverter = new ArabicToRomanNumeralConverter();
+                            _resultTextView.setText(arabicToRomanNumeralConverter.convert(Integer.valueOf(String.valueOf(_dataToConvert.getText()))));
+                            break;
+                        case 2:
+                            RomanNumeralToArabicConverter romanNumeralToArabicConverter = new RomanNumeralToArabicConverter();
+                            _resultTextView.setText(Integer.toString(romanNumeralToArabicConverter.convert(_dataToConvert.getText().toString())));
+                            break;
+                    }
                 }
             });
 
+            _resultTextView = (TextView)rootView.findViewById(R.id.result_label);
             return rootView;
         }
     }
