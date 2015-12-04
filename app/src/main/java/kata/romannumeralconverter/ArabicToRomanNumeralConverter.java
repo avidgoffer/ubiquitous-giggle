@@ -2,12 +2,8 @@ package kata.romannumeralconverter;
 
 public class ArabicToRomanNumeralConverter {
 
-    private int _numberToConvert;
-
     public String convert(final Integer numberToConvert) {
         if(numberToConvert <= 0 || numberToConvert > 3999) throw new IllegalArgumentException("numberToConvert is not in an expected range of 1 to 3,999");
-
-        _numberToConvert = numberToConvert;
 
         String[][] romanNumerals = new String[][]
                 {
