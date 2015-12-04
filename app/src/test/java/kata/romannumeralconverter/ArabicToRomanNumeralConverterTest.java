@@ -31,5 +31,8 @@ public class ArabicToRomanNumeralConverterTest {
         assertEquals("XXI", arabicToRomanNumeralConverter.convert(21));
         assertEquals("XL", arabicToRomanNumeralConverter.convert(40));
         assertEquals("L", arabicToRomanNumeralConverter.convert(50));
+        assertEquals("XC", arabicToRomanNumeralConverter.convert(90));
+        assertEquals("MLXVI", arabicToRomanNumeralConverter.convert(1066));
+        assertEquals("MCMLXXXIX", arabicToRomanNumeralConverter.convert(1989));
     }
 }
